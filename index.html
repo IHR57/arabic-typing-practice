@@ -9,7 +9,7 @@
 </style></head>
 <body><div class="wrap">
 <header class="top"><div class="brand"><div class="logo">ح</div><div>harf<small>ARABIC TYPING PRACTICE</small></div></div><div class="privacy"><i></i> Private by design · No account needed</div></header>
-<section class="hero"><div class="eyebrow">Build your muscle memory</div><h1>A little practice. A lot of progress.</h1><p>Practice Arabic typing with real text, a live keyboard guide, and instant feedback.</p></section>
+<section class="hero"><div class="eyebrow">Build your muscle memory</div><h1>A little practice. A lot of progress.</h1><p>Practice with a growing mix of Arabic passages, a live keyboard guide, and instant feedback.</p></section>
 <div class="controls"><span class="duration-label">DURATION</span><button class="duration" data-time="60">1 min</button><button class="duration" data-time="120">2 min</button><button class="duration active" data-time="300">5 min</button><button class="duration" data-time="600">10 min</button><button class="duration" data-time="900">15 min</button><div class="spacer"></div><button class="btn btn-secondary" id="resetBtn">↻ Restart</button><button class="btn btn-primary" id="startBtn">Start practice →</button></div>
 <div class="stats"><div class="stat"><div class="stat-label">TYPING SPEED</div><div class="stat-value" id="wpm">0 <span>WPM</span></div></div><div class="stat"><div class="stat-label">ACCURACY</div><div class="stat-value" id="accuracy">100<span>%</span></div></div><div class="stat"><div class="stat-label">MISTAKES</div><div class="stat-value" id="mistakes">0</div></div><div class="stat"><div class="stat-label">TIME LEFT</div><div class="stat-value" id="timeLeft">5:00</div></div></div>
 <section class="card" id="practiceCard"><div class="card-head"><div><div class="card-title">Your passage</div><div class="subtle" style="margin-top:4px" id="statusText">Choose a duration, then start when you're ready.</div></div><div class="timer-pill" id="timerPill">READY</div></div><div class="progress"><span id="progressBar"></span></div><div class="passage" id="passage" tabindex="0" aria-label="Arabic typing passage"></div><input id="typingInput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Type the Arabic passage here"><div class="test-footer"><div class="hint" id="hintText">Click the passage or press <span class="kbd-hint">Start practice</span> to begin.</div><div class="hint">Next key: <b id="nextKey" style="color:var(--purple)">—</b></div></div></section>
@@ -24,7 +24,81 @@ const passages=[
 'يذهب أحمد إلى المدرسة في الصباح، ويقرأ كتابه باهتمام. وبعد الدرس، يساعد أسرته ويراجع ما تعلمه.',
 'اللهم علمنا ما ينفعنا، وانفعنا بما علمتنا، وزدنا علما. رب اشرح لي صدري، ويسر لي أمري.',
 'الكلمة الطيبة صدقة، والابتسامة في وجه أخيك خير. تكلم بأدب، واستمع باهتمام، واحترم وقت الآخرين.',
-'في قريتنا مسجد كبير، ومدرسة جميلة، وحديقة صغيرة. يجتمع الأصدقاء بعد العصر، ويتحدثون عن أحلامهم.'
+'في قريتنا مسجد كبير، ومدرسة جميلة، وحديقة صغيرة. يجتمع الأصدقاء بعد العصر، ويتحدثون عن أحلامهم.',
+'أستيقظ مبكرا كل صباح، وأرتب غرفتي، ثم أتناول الفطور مع عائلتي قبل أن أبدأ يومي.',
+'القراءة تفتح أبواب المعرفة، وتساعد الإنسان على فهم العالم من حوله. خصص وقتا للقراءة كل يوم.',
+'يحترم الطالب معلمه، ويستمع إلى الشرح، ويسأل عندما لا يفهم. فالسؤال طريق إلى المعرفة.',
+'تشرق الشمس من الشرق، وتملأ ضوءها الطرق والبيوت. يبدأ الناس أعمالهم، وتدب الحركة في المدينة.',
+'الوقت نعمة ثمينة، فلا تضيعه فيما لا ينفع. نظم يومك، وحدد أهدافك، وابدأ بالأهم.',
+'تساعد الرياضة على تقوية الجسم وتحسين المزاج. امش قليلا كل يوم، واشرب الماء بانتظام.',
+'تجتمع الأسرة حول مائدة الطعام في المساء، ويتحدث كل فرد عن أجمل ما حدث له خلال اليوم.',
+'ذهب خالد إلى المكتبة ليبحث عن كتاب جديد. وجد كتبا في اللغة والتاريخ والعلوم، واختار ما يناسبه.',
+'تحتاج اللغة إلى ممارسة مستمرة. اقرأ نصا قصيرا، واكتب كلمات جديدة، وراجع ما تعلمته في نهاية اليوم.',
+'الصديق الصالح يعين صاحبه على الخير، وينصحه بلطف عند الخطأ، ويفرح لنجاحه وتقدمه.',
+'عندما تزور مدينة جديدة، تعرف على طرقها وأسواقها، واحترم أهلها، وحافظ على نظافة الأماكن العامة.',
+'تعيش الطيور في أعشاش صغيرة بين أغصان الأشجار. وفي الصباح، نسمع أصواتها الجميلة في الحديقة.',
+'يسقي الفلاح أرضه، ويعتني بالنباتات، وينتظر موسم الحصاد بصبر. فالعمل الجاد يحتاج إلى وقت ورعاية.',
+'تعلمت مريم وصفة جديدة من جدتها. جهزت المكونات، واتبعت الخطوات، ثم قدمت الطعام إلى أسرتها.',
+'لا يكفي أن نضع أهدافا كبيرة، بل علينا أن نبدأ بخطوات صغيرة ونستمر في العمل حتى نصل إليها.',
+'إذا أخطأت فلا تخجل من الاعتراف بخطئك. تعلم منه، واعتذر إذا لزم الأمر، وحاول ألا تكرره.',
+'في فصل الشتاء يصبح الجو باردا، فيرتدي الناس الملابس الدافئة ويشربون المشروبات الساخنة.',
+'تزداد خبرة الإنسان عندما يجرب أشياء جديدة، ويستفيد من نصائح الآخرين، ويتعلم من التجارب السابقة.',
+'زار سامي متحف المدينة مع زملائه. شاهد الصور القديمة والأدوات التراثية، واستمع إلى شرح المرشد.',
+'تبدأ العادات الجيدة بأفعال بسيطة. ضع كتابك في مكانه، ونظف مكتبك، واستعد لليوم التالي قبل النوم.',
+'تساعد الأشجار على تنقية الهواء وتوفير الظل للناس. ازرع شجرة، واعتن بها، وشجع الآخرين على حماية البيئة.',
+'أرسل يوسف رسالة إلى صديقه يطمئن عليه، ثم اتفقا على اللقاء في نهاية الأسبوع لزيارة المكتبة.',
+'يحب الأطفال اللعب في الحديقة بعد انتهاء الواجبات. يركضون ويمرحون، ثم يعودون إلى البيت قبل غروب الشمس.',
+'النجاح لا يأتي في يوم واحد. يحتاج إلى صبر وتخطيط ومراجعة مستمرة، وإلى شجاعة البدء من جديد.',
+'حين تستمع إلى شخص آخر، امنحه انتباهك الكامل. لا تقاطعه، وحاول أن تفهم قصده قبل أن تجيب.',
+'تزدحم الأسواق في الصباح، ويعرض الباعة الفواكه والخضروات الطازجة. يختار الناس حاجاتهم بعناية.',
+'سافر عمر بالقطار إلى مدينة قريبة. جلس بجانب النافذة، وشاهد الحقول والقرى وهي تمر أمامه.',
+'من الجميل أن نتعاون في الأعمال المنزلية. يقسم أفراد الأسرة المهام بينهم، فينتهي العمل بسرعة وسهولة.',
+'تعلم كتابة الحروف العربية يحتاج إلى الانتباه إلى شكل الحرف ومكانه في الكلمة واتصاله بالحروف الأخرى.',
+'خصص عشر دقائق يوميا لتدريب أصابعك على لوحة المفاتيح. ابدأ ببطء، ثم زد سرعتك مع الحفاظ على الدقة.',
+'عندما تقرأ خبرا، تحقق من مصدره قبل أن تنشره. فالمعلومة الصحيحة تساعد الناس على اتخاذ قرارات أفضل.',
+'تتغير السماء ألوانها وقت الغروب، وتظهر الغيوم بأشكال مختلفة. يقف بعض الناس لمشاهدة هذا المنظر الهادئ.',
+'زار الطبيب المريض واستمع إلى شكواه، ثم شرح له طريقة العناية بصحته وأهمية اتباع التعليمات.',
+'يحتاج العقل إلى الراحة كما يحتاج الجسم إلى النوم. خذ استراحة قصيرة بين المهام، ثم عد إلى عملك بنشاط.',
+'أعدت ليلى قائمة بالمشتريات قبل الذهاب إلى السوق. ساعدتها القائمة على تذكر حاجاتها وتجنب شراء أشياء غير ضرورية.',
+'الماء أساس الحياة، ويجب ألا نهدره. أغلق الصنبور بعد الاستعمال، وأصلح التسربات، واستخدم الماء بحكمة.',
+'في يوم الجمعة يلتقي الأقارب، ويتبادلون الأخبار، ويسألون عن أحوال بعضهم. تقوي هذه الزيارات صلة الرحم.',
+'يقرأ المعلم قصة قصيرة على الطلاب، ثم يطلب منهم تلخيص الفكرة الرئيسية وكتابة الكلمات الجديدة.',
+'لا تجعل الخوف من الخطأ يمنعك من التعلم. كل محاولة تمنحك خبرة، وكل تصحيح يقربك من الإتقان.',
+'تنظم المدينة حملة لتنظيف الشاطئ. يحضر المتطوعون أكياسا وقفازات، ويجمعون النفايات ويحافظون على المكان.',
+'تتطلب البرمجة تفكيرا منطقيا وصبرا على حل المشكلات. ابدأ بتقسيم المشكلة الكبيرة إلى خطوات صغيرة.',
+'يستطيع الإنسان أن يتعلم مهارة جديدة في أي عمر إذا كان لديه هدف واضح وخطة مناسبة وممارسة منتظمة.',
+'وضعت نورة هاتفها جانبا أثناء الدراسة حتى تركز في الدرس. وبعد الانتهاء، أخذت استراحة قصيرة.',
+'عند عبور الطريق، انظر إلى الجانبين واستخدم ممر المشاة. السلامة مسؤولية كل فرد في المجتمع.',
+'الاعتذار الصادق يدل على الشجاعة والاحترام. اختر كلمات واضحة، واعترف بما فعلت، واعمل على إصلاح الأمر.',
+'تنتج النحلة العسل بعد أن تجمع الرحيق من الأزهار. وهي مثال صغير على النظام والعمل والتعاون في الطبيعة.',
+'في المكتبة الهادئة يستطيع القارئ التركيز والبحث عن المعلومات. أعد الكتب إلى أماكنها بعد الانتهاء منها.',
+'قبل أن تبدأ مشروعا جديدا، حدد المشكلة التي تريد حلها، واعرف من سيستفيد من الحل، ثم اختبر فكرتك.',
+'يستفيد المتعلم من كتابة الملاحظات بأسلوبه الخاص. تساعده هذه الطريقة على تذكر الأفكار ومراجعتها بسهولة.',
+'تجعل الكلمة اللطيفة يوم الآخرين أفضل. اشكر من يساعدك، وقل الحقيقة بأدب، وقدم المساعدة عندما تستطيع.',
+'ينبغي أن نوازن بين العمل والراحة والأسرة. التخطيط الجيد يجعل اليوم أكثر هدوءا ويساعدنا على إنجاز المهمات.',
+'ذهب الأطفال إلى الشاطئ برفقة والديهم. بنوا قصورا من الرمل، وجمعوا الأصداف، ثم تركوا المكان نظيفا.',
+'يبدأ تعلم أي لغة بالاستماع والقراءة، ثم يتحسن بالتحدث والكتابة. لا تتوقف بسبب بطء التقدم في البداية.',
+'تساعد الخرائط على معرفة الاتجاهات والمسافات. اقرأ أسماء الشوارع، وحدد وجهتك، واختر الطريق المناسب.',
+'حين تواجه مشكلة صعبة، توقف قليلا واكتب ما تعرفه وما تحتاج إلى معرفته. قد تظهر لك الخطوة التالية بوضوح.',
+'الحديقة مكان مناسب للراحة والتأمل. اجلس تحت شجرة، واستمع إلى أصوات الطبيعة، وخذ نفسا عميقا.',
+'يحرص الموظف الناجح على التواصل الواضح واحترام المواعيد ومشاركة المعلومات المهمة مع فريقه.',
+'تعلم الأطفال أن لكل شخص دورا في حماية البيئة، مثل تقليل النفايات وإعادة الاستخدام وترشيد استهلاك الطاقة.',
+'من أراد إتقان الكتابة فعليه أن يتدرب كل يوم. راقب أخطاءك، وكرر الكلمات الصعبة، وقارن نتائجك مع الوقت.',
+'تساعد الأعمال التطوعية على خدمة المجتمع وبناء علاقات طيبة. قدم من وقتك ما تستطيع، ولو كان قليلا.',
+'عندما تصل إلى هدف صغير، احتفل بتقدمك ثم اختر الخطوة التالية. الاستمرار أهم من السرعة في البداية.',
+'اللغة العربية غنية بالمفردات والتعبيرات، وتختلف الكلمات في معناها بحسب السياق الذي ترد فيه.',
+'في الصباح الباكر تكون الشوارع أكثر هدوءا، ويستغل بعض الناس الوقت للمشي أو القراءة أو التخطيط ليومهم.',
+'يكتب الباحث أفكاره بوضوح، ويذكر مصادر المعلومات، ويفحص النتائج قبل أن يصل إلى استنتاج نهائي.',
+'لا تنس أن تسأل عن أحوال من تحب. رسالة قصيرة أو مكالمة بسيطة قد تمنح شخصا آخر شعورا بالسعادة.',
+'تساعد الميزانية الشهرية على معرفة أين يذهب المال. سجل المصروفات الأساسية، وراجعها بانتظام، وحدد ما يمكن توفيره.',
+'تحتاج النباتات إلى الضوء والماء والتربة المناسبة. راقب نموها، وأزل الأوراق الجافة، ولا تفرط في ريها.',
+'كان الطريق إلى القرية يمر بين التلال والحقول. توقف المسافر قليلا ليستريح ويستمتع بالمنظر الجميل.',
+'قبل النوم، ابتعد عن الشاشات لبعض الوقت، وجهز ما تحتاج إليه في الصباح، وحاول أن تنام في موعد ثابت.',
+'الإنصات الجيد لا يعني الصمت فقط، بل يعني فهم الكلام وطرح أسئلة مناسبة والتفاعل باحترام.',
+'يخطط الفريق للمهمة بتوزيع الأدوار وتحديد المواعيد ومتابعة التقدم. التعاون يجعل العمل أكثر تنظيما.',
+'من المفيد مراجعة الكلمات الجديدة في جمل كاملة بدلا من حفظها منفردة. هكذا تفهم معناها وطريقة استعمالها.',
+'الرحمة بالحيوان تظهر في توفير الطعام والماء وعدم إيذائه. تعامل مع جميع المخلوقات برفق ومسؤولية.',
+'تبدأ الرحلة الطويلة بخطوة واحدة. اختر عادة مفيدة، وكررها بانتظام، ولا تنتظر الظروف المثالية للبدء.'
 ];
 // Standard Arabic (Arabic 101) legends aligned to physical QWERTY key positions.
 const rows=[
@@ -35,10 +109,10 @@ const rows=[
 [{l:'Ctrl',a:'',f:'lp',wide:true},{l:'Win',a:'',f:'lp'},{l:'Alt',a:'',f:'lp',wide:true},{l:'Space',a:'',f:'ri',space:true},{l:'Alt',a:'',f:'rp',wide:true},{l:'Ctrl',a:'',f:'rp',wide:true}]
 ];
 const fingerNames={lp:'Left pinky',lr:'Left ring finger',lm:'Left middle finger',li:'Left index finger',ri:'Right index finger',rm:'Right middle finger',rr:'Right ring finger',rp:'Right pinky'};
-const keyMap={};let selectedDuration=300, target='', typed='', started=false, ended=false, startAt=0, endAt=0, timer=null, errors=0, correct=0, totalAttempt=0, passagePool=[];
+const keyMap={};let selectedDuration=300, target='', typed='', started=false, ended=false, startAt=0, endAt=0, timer=null, errors=0, correct=0, totalAttempt=0, lastPassage='';
 const $=id=>document.getElementById(id);const input=$('typingInput');
 function buildKeyboard(){const root=$('keyboard');root.innerHTML='';rows.forEach(row=>{const line=document.createElement('div');line.className='key-row';row.forEach(k=>{const el=document.createElement('div');el.className='key f-'+k.f+(k.wide?' wide':'')+(k.space?' space':'');el.dataset.label=k.l;el.dataset.arabic=k.a;el.innerHTML=(k.l==='Space'?'<span style="font:10px DM Sans;color:#a2a6b7">space</span>':`<span class="latin">${k.l}</span>${k.a?`<span class="arabic">${k.a}</span>`:''}`);line.appendChild(el);if(k.a){[...k.a].forEach(ch=>{if(!keyMap[ch])keyMap[ch]=k})}});root.appendChild(line)})}
-function getPassage(){let p;do{p=passages[Math.floor(Math.random()*passages.length)]}while(p===target&&passages.length>1);return p}
+function getPassage(){let p;do{p=passages[Math.floor(Math.random()*passages.length)]}while(p===lastPassage&&passages.length>1);lastPassage=p;return p}
 function reset(){clearInterval(timer);timer=null;started=false;ended=false;typed='';errors=0;correct=0;totalAttempt=0;target=getPassage();$('result').classList.remove('show');$('practiceCard').style.display='block';$('progressBar').style.width='0%';$('timerPill').textContent='READY';$('statusText').textContent='Choose a duration, then start when you\'re ready.';$('hintText').innerHTML='Click the passage or press <span class="kbd-hint">Start practice</span> to begin.';$('startBtn').textContent='Start practice →';$('startBtn').disabled=false;$('wpm').innerHTML='0 <span>WPM</span>';$('accuracy').innerHTML='100<span>%</span>';$('mistakes').textContent='0';updateTime(selectedDuration);renderPassage();updateKeyboard();input.value='';}
 function renderPassage(){const box=$('passage');box.innerHTML='';[...target].forEach((ch,i)=>{const span=document.createElement('span');span.textContent=ch; if(i<typed.length){span.className=typed[i]===ch?'correct':'wrong'}else if(i===typed.length)span.className='current';box.appendChild(span)});$('progressBar').style.width=(typed.length/target.length*100)+'%';let next=target[typed.length]||'✓';$('nextKey').textContent=next===' '?'Space':next;}
 function updateKeyboard(){document.querySelectorAll('.key').forEach(k=>k.classList.remove('active'));const ch=target[typed.length];let found=keyMap[ch];if(ch===' ')found={l:'Space',f:'ri'};if(found){const el=[...document.querySelectorAll('.key')].find(k=>k.dataset.label===found.l);if(el)el.classList.add('active');$('fingerNote').textContent='Next: '+(ch===' '?'Space':ch)+'  ·  Recommended finger: '+fingerNames[found.f]}else $('fingerNote').textContent='Keep going — follow the highlighted key.'}
